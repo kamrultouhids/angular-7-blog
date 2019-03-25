@@ -1,0 +1,26 @@
+<div class="my-4">
+    <button type="button" class="btn btn-primary" routerLink="/category">View Category</button>
+    <div class="card my-4">
+        <h5 class="card-header">Add Category</h5>
+        <div class="card-body">
+            <form (ngSubmit)="updateCategory()">
+                <fieldset>
+                    <div class="form-group">
+                        <label>Category Name<span class="required">*</span></label>
+                        <input required name='name' [(ngModel)]="form.name" #name="ngModel" class="form-control"
+                               placeholder="Enter category name" type="text">
+                        <div *ngIf="error.name" class="required">{{error.name}}</div>
+                    </div>
+                    <span *ngIf="isSubmitting; else showLoginBtn">
+                        <input disabled class="btn btn-info" type="submit" value="loading..">
+                    </span>
+                    <ng-template #showLoginBtn>
+                        <input class="btn btn-info" type="submit" value="update">
+                        &nbsp;
+                        <input routerLink="/category" class="btn btn-secondary" type="button" value="back">
+                    </ng-template>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

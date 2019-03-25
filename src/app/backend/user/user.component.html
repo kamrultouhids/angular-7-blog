@@ -1,0 +1,85 @@
+<div class="card my-4" *ngIf="listView; else editView">
+    <h5 class="card-header">User List</h5>
+    <div class="card-body">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+            <tr class="text-center">
+                <th>S/L</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="loading">
+                    <td colspan="4" class="text-center">
+                        <div class="spinner-border"></div>
+                    </td>
+                </tr>
+                <tr *ngFor="let value of users; let i = index" class="text-center">
+                    <th>{{i + 1}}</th>
+                    <td>{{value.name}}</td>
+                    <td>{{value.email}}</td>
+                    <td style="width:200px" >
+                        <button type="button" (click)="findEditUser(value.id)" data-toggle="modal" data-target="#editModal"
+                                class="btn btn-sm btn-info">Edit
+                        </button>&nbsp;
+                        <button type="button" (click)="findDeleteUser(value.id)" data-toggle="modal" data-target="#deleteModal"
+                                class="btn btn-sm btn-danger">Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<ng-template #editView>
+    <div class="card my-4">
+        <h5 class="card-header">Edit User</h5>
+        <div class="card-body">
+            <form (ngSubmit)="updateUser()">
+                <fieldset >
+                    <div class="form-group">
+                        <label>Name<span class="required">*</span></label>
+                        <input id="test" name='name' [(ngModel)]="form.name" class="form-control" placeholder="Enter name" type="text">
+                        <div *ngIf="error.name" class="required">{{error.name}}</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email<span class="required">*</span></label>
+                        <input name='email' [(ngModel)]="form.email" class="form-control" placeholder="Enter email" type="email">
+                        <div *ngIf="error.email" class="required">{{error.email}}</div>
+                    </div>
+                    <span *ngIf="isSubmitting; else showLoginBtn">
+                        <input class="btn btn-info" disabled type="submit" value="loading..">
+                    </span>
+                    <ng-template #showLoginBtn>
+                        <input  class="btn btn-info" type="submit" value="Update">
+                        &nbsp;
+                        <input (click)="backToUserList()" class="btn btn-secondary" type="button" value="back">
+                    </ng-template>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</ng-template>
+
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="deleteUser()" data-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

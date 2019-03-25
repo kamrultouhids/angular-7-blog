@@ -1,0 +1,98 @@
+<div class="my-4">
+    <button type="button" class="btn btn-primary" routerLink="/post">View Post</button>
+    <div class="card my-4">
+        <h5 class="card-header bg-primary text-white ">Edit Post</h5>
+        <div class="card-body">
+            <form (ngSubmit)="updatePost()">
+                <fieldset>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Post Title<span class="required">*</span></label>
+                                <input (keyup)="generatePostSlug()" name='title' [(ngModel)]="form.title"
+                                       class="form-control"
+                                       placeholder="Enter post title" type="text">
+                                <div *ngIf="error.title" class="required">{{error.title}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Post Slug<span class="required">*</span></label>
+                                <input name='post_slug' [(ngModel)]="form.post_slug" class="form-control"
+                                       placeholder="Enter Post Slug" type="text">
+                                <div *ngIf="error.post_slug" class="required">{{error.post_slug}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Post Category<span class="required">*</span></label>
+                                <select name='category_id' class="form-control" [(ngModel)]="form.category_id">
+                                    <option value="">--- Select Category --</option>
+                                    <option *ngFor="let value of categories" value="{{value.id}}">{{value.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf="error.category_id" class="required">{{error.category_id}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Post Date<span class="required">*</span></label>
+                                <input name='date' [(ngModel)]="form.date" class="form-control"
+                                       placeholder="Enter Date" type="date">
+                                <div *ngIf="error.date" class="required">{{error.date}}</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Status<span class="required">*</span></label>
+                                <select name='status' class="form-control" [(ngModel)]="form.status">
+                                    <option value="Published">Published</option>
+                                    <option value="Unpublished">Unpublished</option>
+                                </select>
+                                <div *ngIf="error.status" class="required">{{error.status}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Picture<span class="required">*</span></label>
+                                <input name='picture' (change)="processFile($event)" class="form-control"
+                                       type="file" accept="image/*">
+                                <div *ngIf="error.picture" class="required">{{error.picture}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="previousImageUrl">
+                            <div class="form-group">
+                                <img class="img-preview-container" src="{{makeImage()}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="!previousImageUrl">
+                            <div class="form-group">
+                                <div *ngIf="form.newPicture">
+                                    <img class="img-preview-container" src="{{form.newPicture}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Description<span class="required">*</span></label>
+                                <textarea rows="5" name='description' [(ngModel)]="form.description"
+                                          class="form-control"
+                                          type="text" placeholder="Enter description"></textarea>
+                                <div *ngIf="error.description" class="required">{{error.description}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <span *ngIf="isSubmitting; else showLoginBtn">
+                        <input class="btn btn-primary" type="submit" disabled value="loading..">
+                    </span>
+                    <ng-template #showLoginBtn>
+                        <input class="btn btn-primary" type="submit" value="Update">
+                        &nbsp;
+                        <input routerLink="/post" class="btn btn-secondary" type="button" value="back">
+                    </ng-template>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

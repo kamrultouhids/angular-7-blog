@@ -1,0 +1,47 @@
+<div class="container" xmlns="http://www.w3.org/1999/html">
+    <div class="row justify-content-center margin-top ">
+        <div class="col-md-6">
+            <div class="card panel-default">
+                <div class="card-header text-center">
+                    <b>Register</b>
+                </div>
+
+                <div class="card-body">
+                    <form (ngSubmit)="register()">
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label>Name<span class="required">*</span></label>
+                                    <input name='name' [(ngModel)]="form.name" class="form-control" placeholder="Enter name" type="text">
+                                    <div *ngIf="error.name" class="required">{{error.name}}</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Email<span class="required">*</span></label>
+                                    <input name='email' [(ngModel)]="form.email" class="form-control" placeholder="Enter email" type="text">
+                                    <div *ngIf="error.email" class="required">{{error.email}}</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Password<span class="required">*</span></label>
+                                    <input name='password' [(ngModel)]="form.password" class="form-control" placeholder="Enter password" type="password">
+                                    <div *ngIf="error.email" class="required">{{error.password}}</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Password Confirmation<span class="required">*</span></label>
+                                    <input name='password_confirmation' [(ngModel)]="form.password_confirmation"  class="form-control" placeholder="Enter Password Confirmation" type="password">
+                                    <div *ngIf="error.password_confirmation" class="required">{{error.password_confirmation}}</div>
+                                </div>
+                            </div>
+                            <span *ngIf="isSubmitting; else showLoginBtn">
+								<input class="btn  btn-info btn-block" disabled type="submit" value="loading..">
+							</span>
+                            <ng-template #showLoginBtn>
+                                <input class="btn  btn-info btn-block" type="submit" value="Register">
+                            </ng-template>
+                        </fieldset>
+                    </form>
+                    <button routerLink="/login" class="btn btn-primary btn-block registration">Back To Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
